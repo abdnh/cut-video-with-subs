@@ -29,8 +29,8 @@ def get_exe_path(cmd: str) -> str:
     """Get the full path of the executable `cmd` in path, otherwise assume we bundle a copy of it under `./bin` and return its path."""
     path = shutil.which(cmd)
     if not path:
-        path = shutil.which(f"./bin/{cmd}")
-    return path if path else cmd
+        path = f"./bin/{cmd}"
+    return path
 
 
 def format_time(seconds: float) -> str:
