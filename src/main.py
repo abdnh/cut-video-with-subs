@@ -219,6 +219,8 @@ class Dialog(QDialog):
                         "-y",
                         "-i",
                         self.video_file,
+                        "-c",
+                        "copy",
                         # "-vcodec",
                         # "copy",
                         # "-acodec",
