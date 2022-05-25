@@ -212,7 +212,6 @@ class Dialog(QDialog):
                     file.write(srt.compose(retimed_subs))
 
                 # generate clip
-
                 with subprocess.Popen(
                     [
                         get_exe_path("ffmpeg"),
@@ -232,13 +231,19 @@ class Dialog(QDialog):
                         split_video_name,
                     ],
                     startupinfo=startup_info(),
+                    text=True,
+                    encoding="utf-8",
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
                 ) as proc:
                     while proc.poll() is None:
                         self.taskman.run_on_main(check_cancel)
                         if canceled:
                             proc.kill()
                         time.sleep(1)
-
+                    if proc.returncode:
+                        out, _ = proc.communicate()
+                        raise Exception(f"FFmpeg returned {proc.returncode}:\n\n{out}")
                 start += length
 
         def on_done(fut: Future) -> None:
