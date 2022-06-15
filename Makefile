@@ -27,7 +27,7 @@ dist/$(APP_NAME)/bin: bin/ffmpeg.7z
 bundle: $(BIN) forms
 
 $(BIN): src/*.py
-	pyinstaller src/main.py --name=$(APP_NAME) --icon=icon.ico --windowed
+	pyinstaller src/main.py --name=$(APP_NAME) --icon=icon.ico --windowed --noconfirm
 
 run: bundle
 	./$(BIN)
